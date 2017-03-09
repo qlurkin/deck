@@ -1,5 +1,61 @@
-doctype html
-html
-  head
-    link(rel="stylesheet", href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css")
-  body
+extends layout.pug
+block title
+  | My Awesome Deck
+block slides
+  section
+    h1 Awesome Deck
+  section
+    h2 How to Make a Deck
+    p Voici un code en Python
+    pre
+      code.language-python.
+        def fct(x):
+          if x &lt; 0:
+            return -x
+          return x
+
+  section
+    h2 How to Make a Deck
+    pre.line-numbers
+      code.language-javascript.
+        function fct(x) {
+          if(x &lt; 0) return -x;
+          return x;
+        }
+  section
+    h2 How to Make a Deck
+    img(src="https://i.ytimg.com/vi/OJa4HPVAk3A/maxresdefault.jpg")
+  section
+    h2 How to Make a Deck
+    img(src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/68/Pillars_of_creation_2014_HST_WFC3-UVIS_full-res_denoised.jpg/982px-Pillars_of_creation_2014_HST_WFC3-UVIS_full-res_denoised.jpg")
+
+  section
+    h2 How to Make a Deck
+    ol
+      li
+        p Write Slides
+        p Slide content is simple HTML
+      li
+        p Choose Themes
+        p One for slide styles and one for deck transitions
+      li
+        p Write Slides
+        p Slide content is simple HTML
+      li
+        p Choose Themes
+        p One for slide styles and one for deck transitions
+      li
+        p Write Slides
+        p Slide content is simple HTML
+      li
+        p Choose Themes
+        p One for slide styles and one for deck transitions
+      li
+        p Write Slides
+        p Slide content is simple HTML
+      li
+        p Choose Themes
+        p One for slide styles and one for deck transitions
+  section.full
+    h2 Crossfit
+    img(src="http://i.imgur.com/HoG4VbZ.jpg")

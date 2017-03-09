@@ -1,6 +1,6 @@
 var gulp = require('gulp');
 var pug = require('gulp-pug');
-var inliner = require('./gulp-inliner.js');
+var inliner = require('gulp-inliner');
 
 gulp.task('default', function(){
   return gulp.src('slides.pug')
