@@ -47,6 +47,15 @@ img {
   align-self: center;
 }
 
+img, figure {
+  margin: 0 0 1em 0;
+  padding: 0;
+}
+
+figure>img {
+  margin-bottom: 5px;
+}
+
 .mode-deck .deck-current.full {
   width: 100vw;
   height: 100vh;
@@ -69,11 +78,11 @@ img {
 }
 
 .mode-deck .document-only {
-  visibility: hidden;
+  display: none;
 }
 
 .mode-document .deck-only {
-  visibility: hidden;
+  display: none;
 }
 
 body.mode-document {
@@ -114,6 +123,20 @@ li small {
   padding-left: 3ex;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1, h2, h3, h4, h5, h6, pre, table, img {
   page-break-after: avoid;
+}
+
+.center {
+  text-align: center;
+}
+
+.big {
+  font-size: 1.5em;
+}
+
+figcaption {
+  text-align: center;
+  font-style: italic;
+  font-size: 0.8em;
 }
