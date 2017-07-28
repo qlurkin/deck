@@ -12,7 +12,6 @@
 		"gulp": "^3.9.1",
 		"gulp-inliner": "^1.0.0",
 		"gulp-pug": "^3.2.0",
-		"inliner": "^1.10.2",
-		"through2": "^2.0.3"
+		"inliner": "^1.10.2"
 	}
 }
