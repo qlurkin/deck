@@ -45,6 +45,7 @@ body {
 img {
 	max-width: 100%;
 	align-self: center;
+	display: block;
 }
 
 img, figure {
@@ -53,7 +54,7 @@ img, figure {
 }
 
 figure>img {
-	margin-bottom: 5px;
+	margin: 5px auto;
 }
 
 .mode-deck .deck-current.full {
@@ -139,4 +140,12 @@ figcaption {
 	text-align: center;
 	font-style: italic;
 	font-size: 0.8em;
+}
+
+h1 > small {
+	display: block;
+	font-size: 0.6em;
+	font-weight: normal;
+	color: gray;
+	margin-top: 0.4em;
 }
