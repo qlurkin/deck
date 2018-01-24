@@ -7,3 +7,42 @@ block slides
 	
 	section
 		h2 Slide title
+		ul
+			li Some things
+				small Sub things
+			li More things
+	
+	section.full
+		h2 Full Frame Image
+		img(src="lib/ECAM.jpg")
+
+	section
+		h2 Slide with code
+		ul 
+			li Block of code
+				pre
+					code.lang-js.
+						function hello() {
+							console.log("Hello World !!!")
+						}
+			li Inline code #[code.lang-js console.log("inline")]
+	
+	section
+		h2 Slide with Math
+		ul
+			li Block of Math $$ \left( \sum_{k=1}^n a_k b_k \right)^2 \leq \left( \sum_{k=1}^n a_k^2 \right) \left( \sum_{k=1}^n b_k^2 \right) $$
+			li Inline Math $ f(x) = \int_{-\infty}^\infty \hat f(\xi)\,e^{2 \pi i \xi x} \,d\xi $
+
+	section
+		h2 Slide with image
+		figure
+			img.third2(src="lib/ECAM.jpg")
+		p By default image are limited to 100% in the horizontal direction but you can use the #[code.lang-css half], #[code.lang-css third], #[code.lang-css third2], #[code.lang-css fourth] and #[code.lang-css fourth3] classes to change that.
+	
+	section
+		h2 Slide with column
+		.columns.wide-left
+			.left
+				p Text of the left part
+			.right
+				p Text of the right part
