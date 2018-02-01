@@ -1,6 +1,7 @@
 *.html
-node_modules
-build
-images
+/node_modules/
+/build/
+/images/
 pdf
 slides.pug
+/img/
