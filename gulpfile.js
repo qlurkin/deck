@@ -4,7 +4,9 @@ var inliner = require('gulp-inliner');
 
 gulp.task('default', function(){
 	return gulp.src('*.pug')
-		.pipe(pug())
+		.pipe(pug({
+			pretty: true
+		}))
 		.pipe(inliner({
 			inlinemin: true,
 			compressCSS: false,
