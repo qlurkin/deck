@@ -4,15 +4,19 @@
 	"description": "HTML deck",
 	"main": "gulpfile.js",
 	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1",
-		"build": "gulp"
+		"test": "echo \"Error: no test specified\" && exit 1"
 	},
 	"author": "Quentin Lurkin",
 	"license": "ISC",
 	"devDependencies": {
-		"gulp": "^3.9.1",
-		"gulp-inliner": "^1.0.0",
-		"gulp-pug": "^3.2.0",
 		"inliner": "^1.10.2"
+	},
+	"bin": {
+		"buildDeck": "./buildDeck.js"
+	},
+	"dependencies": {
+		"ncp": "^2.0.0",
+		"pug": "^2.0.3",
+		"rimraf": "^2.6.3"
 	}
 }

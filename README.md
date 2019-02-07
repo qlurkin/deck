@@ -6,13 +6,13 @@ Yet Another HTML Deck
 git clone https://github.com/qlurkin/deck.git
 cd deck
 npm install
+npm link
 ```
 
 ## Create a deck
 Decks are written in pug. A minimal deck would be:
 
 ```pug
-extends lib/layout.pug
 block title
    | Browser tab Title
 block slides
@@ -28,6 +28,6 @@ You can find examples in the `example.pug` file
 ## Building Slides
 
 ```bash
-npm run build
+buildDeck <slides.pug> > <result.html>
 ```
 
