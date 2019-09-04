@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>My Deck</title>
+	<script src="deck.js"></script>
+</head>
+<body>
+	<section>
+		<h1>Deck Title</h1>
+	</section>
+	<section>
+		<h2>Slide Title</h2>
+		<ul>
+			<li>Some things <small>Small Sub Things</small></li>
+			<li>More Things</li>
+		</ul>
+	</section>
+	<section class="full">
+		<h2>Full Frame Image</h2>
+		<img src="ECAM.jpg" alt="ECAM">
+	</section>
+	<section>
+		<h2>Slide with code</h2>
+		<ul>
+			<li>
+				Block of Code
+				<pre>
+					<code class="lang-js">
+						function hello() {
+							console.log("hello World !!!")
+						}
+					</code>
+				</pre>
+			</li>
+			<li>Inline code <code class="lang-js">console.log("inline")</code></li>
+		</ul>
+	</section>
+	<section>
+		<h2>Slide with Math</h2>
+		<ul>
+			<li>Block of Math $$ \left( \sum_{k=1}^n a_k b_k \right)^2 \leq \left( \sum_{k=1}^n a_k^2 \right) \left( \sum_{k=1}^n b_k^2 \right) $$</li>
+			<li>Inline Math \( f(x) = \int_{-\infty}^\infty \hat f(\xi)\,e^{2 \pi i \xi x} \,d\xi \)</li>
+		</ul>
+	</section>
+	<section>
+		<h2>Slide with image</h2>
+		<figure>
+			<img src="ECAM.jpg" alt="ECAM" class="third2">
+			<figcaption>L'ECAM</figcaption>
+		</figure>
+		<p>By default image are limited to 100% in the horizontal direction but you can use the <code class="lang-css">half</code>, <code class="lang-css">third</code>, <code class="lang-css">third2</code>, <code class="lang-css">fourth</code>, <code class="lang-css">fourth3</code>, <code class="lang-css">zoom</code> and <code class="lang-css">max</code> classes to change that.</p>
+	</section>
+
+	<section>
+		<h2>Slide with column</h2>
+		<div class="columns wide-left">
+			<div class="left">
+				<p>Text of the left part</p>
+			</div>
+			<div class="right">
+				<p>Text of the right part</p>
+			</div>
+		</div>
+	</section>
+
+	<section>
+		<h2>Text that show in certain mode</h2>
+		<p class="document-only">This shows only in document</p>
+		<p class="deck-only">This shows only in deck</p>
+	</section>
+
+	<section>
+		<h2>Typography</h2>
+		<p>This is <strong>important</strong></p>
+		<p>This is <span class="big">Big</span></p>
+		<p class="center">This is centered</p>
+	</section>
+</body>
+</html>

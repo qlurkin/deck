@@ -1,22 +1,29 @@
 {
-	"name": "slides",
-	"version": "0.0.1",
-	"description": "HTML deck",
-	"main": "gulpfile.js",
-	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1"
-	},
-	"author": "Quentin Lurkin",
-	"license": "ISC",
-	"devDependencies": {
-		"inliner": "^1.10.2"
-	},
-	"bin": {
-		"buildDeck": "./buildDeck.js"
-	},
-	"dependencies": {
-		"ncp": "^2.0.0",
-		"pug": "^2.0.3",
-		"rimraf": "^2.6.3"
-	}
+  "name": "deck",
+  "version": "1.0.0",
+  "description": "",
+  "main": "deck.js",
+  "scripts": {
+    "build": "rollup -c"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/qlurkin/deck.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/qlurkin/deck/issues"
+  },
+  "homepage": "https://github.com/qlurkin/deck#readme",
+  "devDependencies": {
+    "@babel/core": "^7.5.5",
+    "rollup": "^1.20.2",
+    "rollup-plugin-babel": "^4.3.3",
+    "rollup-plugin-node-resolve": "^5.2.0",
+    "rollup-plugin-postcss": "^2.0.3"
+  },
+  "dependencies": {
+    "postcss-url": "^8.0.0"
+  }
 }
