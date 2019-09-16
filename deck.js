@@ -19,7 +19,7 @@ const deckOk = Promise.all(scripts).then(() => loadScript("https://cdnjs.cloudfl
 window.addEventListener("DOMContentLoaded", (event) => {
 	console.log("DOM Loaded and Parsed")
 	
-	document.body.classList.add('mode-deck')
+	document.body.classList.add('mode-document')
 
 	Prism.highlightAll()
 
