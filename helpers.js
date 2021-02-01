@@ -1,8 +1,11 @@
 export const loadScript = url => new Promise(resolve => {
 	const script = document.createElement('script')
-	script.onload = () => {
+	const callback = () => {
 		resolve()
 	}
+	script.onload = callback
+	script.onreadystatechange = callback;
+	
 	script.setAttribute("src", url)
 	document.head.insertBefore(script , null)
 })

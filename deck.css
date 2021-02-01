@@ -1,3 +1,9 @@
+@import url('https://fonts.googleapis.com/css?family=Lora|Source+Code+Pro&display=swap');
+
+@page {
+	margin: 1cm;
+}
+
 * {
 	box-sizing: border-box;
 }
@@ -7,6 +13,7 @@ body {
 	text-rendering: optimizeLegibility;
 	margin: 0;
 	padding: 0;
+	background-color: white;
 }
 
 .mode-deck .deck-before, .mode-deck .deck-previous, .mode-deck .deck-next, .mode-deck .deck-after {
@@ -127,6 +134,12 @@ body.mode-document {
 	padding: 1em 0;
 }
 
+h3 {
+	font-size: 1em;
+	font-variant: small-caps;
+	font-weight: bolder;
+}
+
 strong {
 	font-weight: normal;
 	color: red;
@@ -150,7 +163,15 @@ li small {
 }
 
 h1, h2, h3, h4, h5, h6, pre, table, img {
-	page-break-after: avoid;
+	break-inside: avoid-page;
+}
+
+/* hack that avoid page break after h2 et h3 */
+h2::after, h3::after {
+	content: "";
+	display: block;
+	height: 100px;
+	margin-bottom: -100px;
 }
 
 .center {
@@ -205,4 +226,41 @@ h1 > small {
 
 li > ul {
 	margin-top: 1em;
+}
+
+code:not([class*="language-"]) {
+	font-family: 'Source Code Pro', monospace;
+	font-size: 87.5%;
+	color: #e83e8c;
+}
+
+.mode-deck .material-icons.off {
+	display: none;
+}
+
+.mode-document .material-icons.on {
+	display: none;
+}
+
+.toggle-button {
+	opacity: 50%;
+	background-color: transparent;
+	border: none;
+	position: fixed;
+	top: 5px;
+	left: 5px;
+	z-index: 2000;
+	font-size: 1.2em;
+	padding: 2vh;
+}
+
+.toggle-button:focus {
+	border: none;
+	outline: transparent;
+}
+
+@media print {
+	.toggle-button {
+		display: none;
+	}
 }

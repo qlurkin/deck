@@ -1,10 +1,22 @@
 import './deck.css'
-import './lib/prism.css'
-import Prism from './lib/prism.js'
+//import './lib/prism.css'
+//import Prism from './lib/prism.js'
 import { loadCSS, loadScript } from './helpers.js'
+
+const loadPrism = () => {
+	console.log('Load Prism.js')
+	loadCSS('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')
+	loadScript('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/components/prism-core.min.js')
+	.then(() => loadScript('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/plugins/normalize-whitespace/prism-normalize-whitespace.min.js'))
+	.then(() => loadScript('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/plugins/autoloader/prism-autoloader.min.js'))
+	.then(() => {
+		Prism.highlightAll()
+	})
+}
 
 loadCSS("https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css")
 loadCSS("https://fonts.googleapis.com/css?family=Roboto|Roboto+Condensed|Roboto+Mono|Roboto+Slab")
+loadCSS("https://fonts.googleapis.com/icon?family=Material+Icons")
 loadCSS("https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css")
 
 const scripts = []
@@ -21,7 +33,14 @@ window.addEventListener("DOMContentLoaded", (event) => {
 	
 	document.body.classList.add('mode-document')
 
-	Prism.highlightAll()
+	//Prism.highlightAll()
+	if(document.querySelectorAll('[class*=lang]').length > 0)
+		loadPrism()
+
+	function toggleView() {
+		$('body').toggleClass('mode-deck')
+		$('body').toggleClass('mode-document')
+	}
 
 	deckOk.then(() => {
 		renderMathInElement(document.body)
@@ -34,9 +53,17 @@ window.addEventListener("DOMContentLoaded", (event) => {
 	
 		$(document).keypress(function (event) {
 			if (event.key === 'm') {
-				$('body').toggleClass('mode-deck');
-				$('body').toggleClass('mode-document');
+				toggleView()
 			}
 		});
+
+		// const button = document.createElement("button")
+		// button.innerHTML = '<i class="material-icons off">toggle_off</i><i class="material-icons on">toggle_on</i>'
+		// button.classList.add("toggle-button")
+		// document.body.appendChild(button)
+		// button.addEventListener('click', () => {
+		// 	toggleView()
+		// 	button.blur()
+		// })
 	})
 })
