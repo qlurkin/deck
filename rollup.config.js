@@ -10,13 +10,7 @@ export default [
 			format: 'iife'
 		},
 		plugins: [ 
-			resolve(),
-			babel({
-				exclude: 'node_modules/**'
-			}),
-			postcss({
-				plugins: []
-			})
+			resolve()
 		]
 	}
 ]

@@ -1,6 +1,6 @@
 {
   "name": "deck",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "",
   "main": "deck.js",
   "scripts": {
@@ -15,15 +15,5 @@
   "bugs": {
     "url": "https://github.com/qlurkin/deck/issues"
   },
-  "homepage": "https://github.com/qlurkin/deck#readme",
-  "devDependencies": {
-    "@babel/core": "^7.5.5",
-    "rollup": "^1.20.2",
-    "rollup-plugin-babel": "^4.3.3",
-    "rollup-plugin-node-resolve": "^5.2.0",
-    "rollup-plugin-postcss": "^2.0.3"
-  },
-  "dependencies": {
-    "postcss-url": "^8.0.0"
-  }
+  "homepage": "https://github.com/qlurkin/deck#readme"
 }
