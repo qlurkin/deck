@@ -1,0 +1,20 @@
+@import url('https://fonts.googleapis.com/css?family=Lora|Source+Code+Pro&display=swap');
+
+* {
+	box-sizing: border-box;
+}
+
+body {
+	font-family: 'Roboto', sans-serif;
+	text-rendering: optimizeLegibility;
+	margin: 0;
+	padding: 0;
+	background-color: white;
+}
+
+code {
+	font-size: .875em;
+	color: #d63384;
+	word-wrap: break-word;
+	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+}

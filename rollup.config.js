@@ -1,6 +1,7 @@
 import resolve from 'rollup-plugin-node-resolve'
-import postcss from 'rollup-plugin-postcss'
-import babel from 'rollup-plugin-babel'
+import commonjs from '@rollup/plugin-commonjs'
+import sass from 'rollup-plugin-sass'
+
 
 export default [
 	{
@@ -10,7 +11,11 @@ export default [
 			format: 'iife'
 		},
 		plugins: [ 
-			resolve()
+			resolve(),
+			commonjs(),
+			sass({
+				insert: true
+			})
 		]
 	}
 ]

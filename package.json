@@ -15,5 +15,14 @@
   "bugs": {
     "url": "https://github.com/qlurkin/deck/issues"
   },
-  "homepage": "https://github.com/qlurkin/deck#readme"
+  "homepage": "https://github.com/qlurkin/deck#readme",
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^17.1.0",
+    "rollup": "^2.40.0",
+    "rollup-plugin-node-resolve": "^5.2.0",
+    "rollup-plugin-sass": "^1.2.2"
+  },
+  "dependencies": {
+    "highlight.js": "^10.6.0"
+  }
 }
