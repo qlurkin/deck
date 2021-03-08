@@ -1,24 +1,80 @@
-import hljs from 'highlight.js'
-import './code.scss'
 import './deck.scss'
 
-function normalizeIndent(str) {
-	// trim empty lines from start & end
-	str = str.replace(/^\s?\n|\n\s?$/g, '');
- 
-	const lines = str.split('\n');
-	const indentLen = /^\s*/.exec(lines[0])[0].length;
-	return lines.map(l => l.slice(indentLen)).join('\n');
+import './code.js'
+
+function setHash(str) {
+	if(history.pushState) {
+		history.pushState(null, null, '#'+str)
+	}
+	else {
+		window.location.hash = '#'+str
+	}
 }
 
-function normalizeAllIndent() {
-	const codes = document.querySelectorAll('pre>code')
-	codes.forEach(code => {
-		code.innerText = normalizeIndent(code.innerText)
+let count = 0
+let current = 0
+
+export function initDeck() {
+	current = 1
+	if(window.location.hash.length > 0 && window.location.hash.startsWith('#slide-')) {
+		current = parseInt(window.location.hash.slice('#slide-'.length), 10)
+	}
+	else {
+		setHash('slide-'+current)
+	}
+	
+	const slides = document.querySelectorAll('body>section')
+	
+	let i = 1
+	slides.forEach(slide => {
+		
+		slide.id = 'slide-'+i
+		if(i < current-1) {
+			slide.classList.add('deck-before')
+		}
+		else if(i == current-1) {
+			slide.classList.add('deck-previous')
+		}
+		else if(i == current) {
+			slide.classList.add('deck-current')
+		}
+		else if(i == current+1) {
+			slide.classList.add('deck-next')
+		}
+		else {
+			slide.classList.add('deck-after')
+		}
+		i++
 	})
+
+	count = i - 1
+}
+
+export function currentSlide() {
+	return current
+}
+
+export function getSlideCount() {
+	return count
+}
+
+function transformElement(selector, className, newClass) {
+	const previous = document.querySelector(selector)
+	previous.classList.remove(className)
+	previous.classList.add(newClass)
+}
+
+export function nextSlide() {
+	transformElement('.deck-previous', 'deck-previous', 'deck-before')
+	transformElement('.deck-current', 'deck-current', 'deck-previous')
+	transformElement('.deck-next', 'deck-next', 'deck-current')
+	transformElement('.deck-after', 'deck-after', 'deck-next')
+}
+
+export function previousSlide() {
+
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-	normalizeAllIndent()
-	hljs.highlightAll()
+	initDeck()
 })
