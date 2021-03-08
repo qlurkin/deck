@@ -72,7 +72,10 @@ export function nextSlide() {
 }
 
 export function previousSlide() {
-
+	transformElement('.deck-next', 'deck-next', 'deck-after')
+	transformElement('.deck-current', 'deck-current', 'deck-next')
+	transformElement('.deck-previous', 'deck-previous', 'deck-current')
+	transformElement('.deck-before:last-of-type', 'deck-before', 'deck-previous')
 }
 
 document.addEventListener('DOMContentLoaded', () => {
