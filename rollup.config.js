@@ -8,7 +8,8 @@ export default [
 		input: 'deck.js',
 		output: {
 			file: 'dist/deck.js',
-			format: 'iife'
+			format: 'iife',
+			name: 'Deck'
 		},
 		plugins: [ 
 			resolve(),

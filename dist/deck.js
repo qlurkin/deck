@@ -1,4 +1,4 @@
-(function () {
+var Deck = (function (exports) {
 	'use strict';
 
 	
@@ -19,7 +19,7 @@
 	  return css;
 	}
 
-	___$insertStyle("@import url(\"https://fonts.googleapis.com/css?family=Lora|Source+Code+Pro&display=swap\");\n* {\n  box-sizing: border-box;\n}\n\nbody {\n  font-family: \"Roboto\", sans-serif;\n  text-rendering: optimizeLegibility;\n  margin: 0;\n  padding: 0;\n  background-color: white;\n}\n\ncode {\n  font-size: 0.875em;\n  color: #d63384;\n  word-wrap: break-word;\n  font-family: Consolas, Monaco, \"Andale Mono\", \"Ubuntu Mono\", monospace;\n}");
+	___$insertStyle("@import url(\"https://fonts.googleapis.com/css2?family=Lora&family=Roboto&family=Roboto+Condensed&family=Roboto+Mono&family=Roboto+Slab&family=Source+Code+Pro&display=swap\");\n@import url(\"https://fonts.googleapis.com/icon?family=Material+Icons\");\n* {\n  box-sizing: border-box;\n}\n\nbody {\n  font-family: \"Roboto\", sans-serif;\n  text-rendering: optimizeLegibility;\n  margin: 0;\n  padding: 0;\n  background-color: white;\n}\n\ncode {\n  font-size: 0.875em;\n  color: #d63384;\n  word-wrap: break-word;\n  font-family: Consolas, Monaco, \"Andale Mono\", \"Ubuntu Mono\", monospace;\n}\n\nimg {\n  max-width: 100%;\n}\n\nfigure {\n  margin: 0 0 1em 0;\n  padding: 0;\n  text-align: center;\n}\n\n.mode-deck .deck-before, .mode-deck .deck-previous, .mode-deck .deck-next, .mode-deck .deck-after {\n  display: none;\n}\n.mode-deck .deck-current {\n  display: flex;\n  font-size: 3.5vh;\n  width: 133vh;\n  min-height: 100vh;\n  flex-direction: column;\n  justify-content: center;\n  margin: 0 auto;\n  padding: 12vh 4vh 4vh 4vh;\n}\n.mode-deck .deck-current h2 {\n  position: fixed;\n  top: 0;\n  left: 0;\n  right: 0;\n  margin: 0;\n  padding: 2vh 10vh;\n  font-family: \"Roboto Slab\", serif;\n  font-size: 1.2em;\n  color: white;\n  background-color: green;\n  text-align: right;\n  z-index: 1000;\n}\n.mode-deck .deck-current h1 {\n  font-family: \"Roboto Slab\", serif;\n  font-size: 2em;\n}\n.mode-deck .deck-current > * {\n  flex: 0 0 auto;\n}\n.mode-deck .deck-current.full {\n  width: 100vw;\n  height: 100vh;\n  padding: 0;\n}\n.mode-deck .deck-current.full h2 {\n  background-color: rgba(0, 0, 0, 0.5);\n}\n.mode-deck .deck-current.full img {\n  width: 100%;\n  height: 100%;\n  object-fit: cover;\n  margin: 0;\n}");
 
 	function deepFreeze(obj) {
 	    if (obj instanceof Map) {
@@ -44782,11 +44782,66 @@
 		}
 	}
 
+	let count = 0;
+	let current = 0;
+
+	function initNavigation() {
+		document.addEventListener('keydown', event => {
+			event.preventDefault();
+			console.log('code:', event.code);
+			if (['ArrowRight', 'ArrowDown', 'KeyS', 'KeyD', 'Space'].includes(event.code)) {
+				nextSlide();
+			}
+			else if(['ArrowLeft', 'ArrowUp', 'KeyW', 'KeyA'].includes(event.code)) {
+				previousSlide();
+			}
+		});
+	}
+
+	function setClass(slideNumber, className) {
+		const slide = document.getElementById('slide-'+slideNumber);
+		if(slide.classList.contains(className)) return
+
+		const classAttrib = slide.attributes["class"];
+		console.log(classAttrib);
+		if(classAttrib) {
+			const classes = classAttrib.value;
+			console.log(classes);
+			const deckClasses = classes.match(/deck-.+/);
+			if(deckClasses) {
+				for(let cl of deckClasses) {
+					slide.classList.remove(cl);
+				}
+			}
+		}
+
+		slide.classList.add(className);
+	}
+
+	function setClasses() {
+		for(let i=1; i <= count; i++) {
+			if(i < current-1) {
+				setClass(i, 'deck-before');
+			}
+			else if(i == current-1) {
+				setClass(i, 'deck-previous');
+			}
+			else if(i == current) {
+				setClass(i, 'deck-current');
+			}
+			else if(i == current+1) {
+				setClass(i, 'deck-next');
+			}
+			else {
+				setClass(i, 'deck-after');
+			}
+		}
+	}
+
 	function initDeck() {
-		let current = 1;
+		current = 1;
 		if(window.location.hash.length > 0 && window.location.hash.startsWith('#slide-')) {
 			current = parseInt(window.location.hash.slice('#slide-'.length), 10);
-			console.log(current);
 		}
 		else {
 			setHash('slide-'+current);
@@ -44796,34 +44851,56 @@
 		
 		let i = 1;
 		slides.forEach(slide => {
-			
 			slide.id = 'slide-'+i;
-			if(i < current-1) {
-				slide.classList.add('deck-before');
-			}
-			else if(i == current-1) {
-				slide.classList.add('deck-previous');
-			}
-			else if(i == current) {
-				slide.classList.add('deck-current');
-			}
-			else if(i == current+1) {
-				slide.classList.add('deck-next');
-			}
-			else {
-				slide.classList.add('deck-after');
-			}
 			i++;
 		});
-		console.log(currentSlide());
+
+		count = slides.length;
+
+		setClasses();
+		initNavigation();
+
+		document.body.classList.add('mode-deck');
 	}
 
 	function currentSlide() {
-		return parseInt(document.querySelector('.deck-current').id.slice('slide-'.length), 10)
+		return current
+	}
+
+	function getSlideCount() {
+		return count
+	}
+
+	function nextSlide() {
+		setCurrent(current+1);
+	}
+
+	function previousSlide() {
+		setCurrent(current-1);
+	}
+
+	function setCurrent(i) {
+		if(i < 1) i = 1;
+		if(i > count) i = count;
+		if(i == current) return
+		current = i;
+		setClasses();
+		setHash('slide-'+i);
 	}
 
 	document.addEventListener('DOMContentLoaded', () => {
 		initDeck();
 	});
 
-}());
+	exports.currentSlide = currentSlide;
+	exports.getSlideCount = getSlideCount;
+	exports.initDeck = initDeck;
+	exports.nextSlide = nextSlide;
+	exports.previousSlide = previousSlide;
+	exports.setCurrent = setCurrent;
+
+	Object.defineProperty(exports, '__esModule', { value: true });
+
+	return exports;
+
+}({}));

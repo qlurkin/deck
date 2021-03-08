@@ -14,6 +14,59 @@ function setHash(str) {
 let count = 0
 let current = 0
 
+function initNavigation() {
+	document.addEventListener('keydown', event => {
+		event.preventDefault()
+		console.log('code:', event.code)
+		if (['ArrowRight', 'ArrowDown', 'KeyS', 'KeyD', 'Space'].includes(event.code)) {
+			nextSlide()
+		}
+		else if(['ArrowLeft', 'ArrowUp', 'KeyW', 'KeyA'].includes(event.code)) {
+			previousSlide()
+		}
+	})
+}
+
+function setClass(slideNumber, className) {
+	const slide = document.getElementById('slide-'+slideNumber)
+	if(slide.classList.contains(className)) return
+
+	const classAttrib = slide.attributes["class"]
+	console.log(classAttrib)
+	if(classAttrib) {
+		const classes = classAttrib.value
+		console.log(classes)
+		const deckClasses = classes.match(/deck-.+/)
+		if(deckClasses) {
+			for(let cl of deckClasses) {
+				slide.classList.remove(cl)
+			}
+		}
+	}
+
+	slide.classList.add(className)
+}
+
+function setClasses() {
+	for(let i=1; i <= count; i++) {
+		if(i < current-1) {
+			setClass(i, 'deck-before')
+		}
+		else if(i == current-1) {
+			setClass(i, 'deck-previous')
+		}
+		else if(i == current) {
+			setClass(i, 'deck-current')
+		}
+		else if(i == current+1) {
+			setClass(i, 'deck-next')
+		}
+		else {
+			setClass(i, 'deck-after')
+		}
+	}
+}
+
 export function initDeck() {
 	current = 1
 	if(window.location.hash.length > 0 && window.location.hash.startsWith('#slide-')) {
@@ -27,27 +80,16 @@ export function initDeck() {
 	
 	let i = 1
 	slides.forEach(slide => {
-		
 		slide.id = 'slide-'+i
-		if(i < current-1) {
-			slide.classList.add('deck-before')
-		}
-		else if(i == current-1) {
-			slide.classList.add('deck-previous')
-		}
-		else if(i == current) {
-			slide.classList.add('deck-current')
-		}
-		else if(i == current+1) {
-			slide.classList.add('deck-next')
-		}
-		else {
-			slide.classList.add('deck-after')
-		}
 		i++
 	})
 
-	count = i - 1
+	count = slides.length
+
+	setClasses()
+	initNavigation()
+
+	document.body.classList.add('mode-deck')
 }
 
 export function currentSlide() {
@@ -60,22 +102,29 @@ export function getSlideCount() {
 
 function transformElement(selector, className, newClass) {
 	const previous = document.querySelector(selector)
+	if(!previous) {
+		console.log('Nothing', selector)
+		return
+	}
 	previous.classList.remove(className)
 	previous.classList.add(newClass)
 }
 
 export function nextSlide() {
-	transformElement('.deck-previous', 'deck-previous', 'deck-before')
-	transformElement('.deck-current', 'deck-current', 'deck-previous')
-	transformElement('.deck-next', 'deck-next', 'deck-current')
-	transformElement('.deck-after', 'deck-after', 'deck-next')
+	setCurrent(current+1)
 }
 
 export function previousSlide() {
-	transformElement('.deck-next', 'deck-next', 'deck-after')
-	transformElement('.deck-current', 'deck-current', 'deck-next')
-	transformElement('.deck-previous', 'deck-previous', 'deck-current')
-	transformElement('.deck-before:last-of-type', 'deck-before', 'deck-previous')
+	setCurrent(current-1)
+}
+
+export function setCurrent(i) {
+	if(i < 1) i = 1
+	if(i > count) i = count
+	if(i == current) return
+	current = i
+	setClasses()
+	setHash('slide-'+i)
 }
 
 document.addEventListener('DOMContentLoaded', () => {
