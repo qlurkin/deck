@@ -1,4 +1,5 @@
-import hljs from 'highlight.js'
+import hljs from './highlight'
+
 import './code.scss'
 
 function normalizeIndent(str) {
