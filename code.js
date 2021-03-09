@@ -1,4 +1,5 @@
 import hljs from './highlight'
+import {DOMReady} from './helpers'
 
 import './code.scss'
 
@@ -18,7 +19,7 @@ function normalizeAllIndent() {
 	})
 }
 
-document.addEventListener('DOMContentLoaded', () => {
+DOMReady().then(() => {
 	normalizeAllIndent()
 	hljs.highlightAll()
 })

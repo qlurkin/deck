@@ -19,7 +19,48 @@ var Deck = (function (exports) {
 	  return css;
 	}
 
-	___$insertStyle("@import url(\"https://fonts.googleapis.com/css2?family=Lora&family=Roboto&family=Roboto+Condensed&family=Roboto+Mono&family=Roboto+Slab&family=Source+Code+Pro&display=swap\");\n@import url(\"https://fonts.googleapis.com/icon?family=Material+Icons\");\n* {\n  box-sizing: border-box;\n}\n\nbody {\n  font-family: \"Roboto\", sans-serif;\n  text-rendering: optimizeLegibility;\n  margin: 0;\n  padding: 0;\n  background-color: white;\n}\n\ncode {\n  font-size: 0.875em;\n  color: #d63384;\n  word-wrap: break-word;\n  font-family: Consolas, Monaco, \"Andale Mono\", \"Ubuntu Mono\", monospace;\n}\n\nimg {\n  max-width: 100%;\n}\n\nfigure {\n  margin: 0 0 1em 0;\n  padding: 0;\n  text-align: center;\n}\n\n.mode-deck .deck-before, .mode-deck .deck-previous, .mode-deck .deck-next, .mode-deck .deck-after {\n  display: none;\n}\n.mode-deck .deck-current {\n  display: flex;\n  font-size: 3.5vh;\n  width: 133vh;\n  min-height: 100vh;\n  flex-direction: column;\n  justify-content: center;\n  margin: 0 auto;\n  padding: 12vh 4vh 4vh 4vh;\n}\n.mode-deck .deck-current h2 {\n  position: fixed;\n  top: 0;\n  left: 0;\n  right: 0;\n  margin: 0;\n  padding: 2vh 10vh;\n  font-family: \"Roboto Slab\", serif;\n  font-size: 1.2em;\n  color: white;\n  background-color: green;\n  text-align: right;\n  z-index: 1000;\n}\n.mode-deck .deck-current h1 {\n  font-family: \"Roboto Slab\", serif;\n  font-size: 2em;\n}\n.mode-deck .deck-current > * {\n  flex: 0 0 auto;\n}\n.mode-deck .deck-current.full {\n  width: 100vw;\n  height: 100vh;\n  padding: 0;\n}\n.mode-deck .deck-current.full h2 {\n  background-color: rgba(0, 0, 0, 0.5);\n}\n.mode-deck .deck-current.full img {\n  width: 100%;\n  height: 100%;\n  object-fit: cover;\n  margin: 0;\n}");
+	const loadScript = url => new Promise(resolve => {
+		const script = document.createElement('script');
+		const callback = () => {
+			resolve();
+		};
+		script.onload = callback;
+		script.onreadystatechange = callback;
+		
+		script.setAttribute("src", url);
+		document.head.insertBefore(script , null);
+	});
+
+	const loadCSS = url => new Promise(resolve => {
+		const link = document.createElement('link');
+		link.onload = () => {
+			resolve();
+		};
+		link.setAttribute("rel", "stylesheet");
+		link.setAttribute("href", url);
+		document.head.insertBefore(link , null);
+	});
+
+	const ready = new Promise((resolve) => {
+		if (document.readyState === "complete" || document.readyState === "loaded" || document.readyState === "interactive") {
+			setTimeout(resolve, 1);
+		}
+		else {
+			document.addEventListener('DOMContentLoaded', () => {
+				resolve();
+			});
+		}
+	});
+
+	ready.then(() => {
+		console.log('DOM Ready');
+	});
+
+	function DOMReady() {
+		return ready
+	}
+
+	___$insertStyle("@import url(\"https://fonts.googleapis.com/css2?family=Roboto&family=Roboto+Slab&family=Source+Code+Pro&display=swap\");\n@import url(\"https://fonts.googleapis.com/icon?family=Material+Icons\");\n@page {\n  margin: 1cm;\n}\n* {\n  box-sizing: border-box;\n}\n\nbody {\n  font-family: \"Roboto\", sans-serif;\n  text-rendering: optimizeLegibility;\n  margin: 0;\n  padding: 0;\n  background-color: white;\n}\n\ncode {\n  font-size: 0.875em;\n  color: #d63384;\n  word-wrap: break-word;\n  font-family: \"Source Code Pro\", monospace;\n}\n\nh3 {\n  font-size: 1em;\n  font-variant: small-caps;\n  font-weight: bolder;\n}\n\nstrong {\n  font-weight: normal;\n  color: red;\n}\n\nli, p {\n  margin: 0 0 1em 0;\n  text-align: justify;\n}\n\nli small {\n  display: block;\n  padding-left: 3ex;\n  margin-top: 0.5em;\n  font-size: 1em;\n  color: gray;\n}\n\n.indent {\n  padding-left: 3ex;\n}\n\nh1 {\n  cursor: pointer;\n}\n\nh1, h2, h3, h4, h5, h6, pre, table, img {\n  break-inside: avoid-page;\n}\n\n/* hack that avoid page break after h2 et h3 */\nh2::after, h3::after, h4::after {\n  content: \"\";\n  display: block;\n  height: 100px;\n  margin-bottom: -100px;\n}\n\n.center {\n  text-align: center;\n}\n\n.big {\n  font-size: 1.5em;\n}\n\nh1 > small {\n  display: block;\n  font-size: 0.6em;\n  font-weight: normal;\n  color: gray;\n  margin-top: 0.4em;\n}\n\n.row {\n  display: grid;\n  grid-template-columns: repeat(12, 1fr);\n  column-gap: 10px;\n  justify-items: stretch;\n  align-items: stretch;\n  justify-content: stretch;\n  align-content: stretch;\n}\n.row .span2 {\n  grid-column-end: span 2;\n}\n.row .span3 {\n  grid-column-end: span 3;\n}\n.row .span4 {\n  grid-column-end: span 4;\n}\n.row .span5 {\n  grid-column-end: span 5;\n}\n.row .span6 {\n  grid-column-end: span 6;\n}\n.row .span7 {\n  grid-column-end: span 7;\n}\n.row .span8 {\n  grid-column-end: span 8;\n}\n.row .span9 {\n  grid-column-end: span 9;\n}\n.row .span10 {\n  grid-column-end: span 10;\n}\n.row .span11 {\n  grid-column-end: span 11;\n}\n\nfigure {\n  margin: 0 0 1em 0;\n  padding: 0;\n  text-align: center;\n}\nfigure figcaption {\n  text-align: center;\n  font-style: italic;\n  font-size: 0.8em;\n}\nfigure img {\n  max-width: 100%;\n}\nfigure img.half {\n  width: 50%;\n}\nfigure img.third {\n  width: 33%;\n}\nfigure img.third2 {\n  width: 66%;\n}\nfigure img.fourth {\n  width: 25%;\n}\nfigure img.fourth3 {\n  width: 75%;\n}\nfigure img.zoom {\n  width: 75%;\n}\nfigure img.max {\n  width: 100%;\n}\n\n.mode-deck .document-only {\n  display: none;\n}\n.mode-deck .deck-before, .mode-deck .deck-previous, .mode-deck .deck-next, .mode-deck .deck-after {\n  display: none;\n}\n.mode-deck .deck-current {\n  display: flex;\n  font-size: 3.5vh;\n  width: 133vh;\n  min-height: 100vh;\n  flex-direction: column;\n  justify-content: center;\n  margin: 0 auto;\n  padding: 12vh 4vh 4vh 4vh;\n}\n.mode-deck .deck-current h2 {\n  position: fixed;\n  top: 0;\n  left: 0;\n  right: 0;\n  margin: 0;\n  padding: 2vh 10vh;\n  font-family: \"Roboto Slab\", serif;\n  font-size: 1.2em;\n  color: white;\n  background-color: green;\n  text-align: right;\n  z-index: 1000;\n}\n.mode-deck .deck-current h1 {\n  font-family: \"Roboto Slab\", serif;\n  font-size: 2em;\n}\n.mode-deck .deck-current > * {\n  flex: 0 0 auto;\n}\n.mode-deck .deck-current.full {\n  width: 100vw;\n  height: 100vh;\n  padding: 0;\n}\n.mode-deck .deck-current.full h2 {\n  background-color: rgba(0, 0, 0, 0.5);\n}\n.mode-deck .deck-current.full img {\n  width: 100%;\n  height: 100%;\n  object-fit: cover;\n  margin: 0;\n}\n\n.mode-document {\n  max-width: 60ex;\n  margin: 0 auto;\n}\n.mode-document .deck-only {\n  display: none;\n}\n.mode-document h2 {\n  font-size: 1.1em;\n  margin-top: 1.5em;\n}\n.mode-document h1 {\n  text-align: right;\n  border-bottom: 1px solid lightgray;\n  padding: 1em 0;\n}\n.mode-document .full img {\n  max-width: 100%;\n}\n\nbody.mode-document {\n  padding: 1rem;\n}\n\n@media (print) {\n  body.mode-document {\n    padding: 0;\n  }\n}");
 
 	function deepFreeze(obj) {
 	    if (obj instanceof Map) {
@@ -9204,10 +9245,29 @@ var Deck = (function (exports) {
 		});
 	}
 
-	document.addEventListener('DOMContentLoaded', () => {
+	DOMReady().then(() => {
 		normalizeAllIndent();
 		core.highlightAll();
 	});
+
+	function renderMath() {
+		const content = document.body.innerText;
+
+		if(content.includes('$$') ||
+			(content.includes('\\(') && content.includes('\\)')) ||
+			(content.includes('\\[') && content.includes('\\]'))) {
+				console.log('Loading Katex...');
+				const proms = [];
+				loadCSS('https://cdn.jsdelivr.net/npm/katex@0.7.1/dist/katex.min.css');
+				proms.push(loadScript('https://cdn.jsdelivr.net/npm/katex@0.7.1/dist/katex.min.js'));
+				proms.push(loadScript('https://cdn.jsdelivr.net/npm/katex@0.7.1/dist/contrib/auto-render.min.js'));
+				proms.push(DOMReady());
+				Promise.all(proms).then(() => {
+					console.log('Render Math...');
+					renderMathInElement(document.body);
+				});
+			}
+	}
 
 	function setHash(str) {
 		if(history.pushState) {
@@ -9220,17 +9280,66 @@ var Deck = (function (exports) {
 
 	let count = 0;
 	let current = 0;
+	let mode = '';
+
+	const touch = {};
+
+	function touchStart(event) {
+		console.log(event);
+		if(event.changedTouches.length == 1) {
+			touch.x = event.changedTouches[0].clientX;
+			touch.y = event.changedTouches[0].clientY;
+		}
+	}
+
+	function touchEnd(event) {
+		console.log(event);
+		const v = {};
+		if(event.changedTouches.length == 1) {
+			v.x = event.changedTouches[0].clientX - touch.x;
+			v.y = event.changedTouches[0].clientY - touch.y;
+
+			if(Math.abs(v.x) > 4*Math.abs(v.y)) {
+				if(v.x > 0) {
+					previousSlide();
+				}
+				else {
+					nextSlide();
+				}
+			}
+		}
+	}
+
+	function addTouchNavigation() {
+		document.addEventListener('touchstart', touchStart);
+		document.addEventListener('touchend', touchEnd);
+	}
+
+	function removeTouchNavigation() {
+		document.removeEventListener('touchstart', touchStart);
+		document.removeEventListener('touchend', touchEnd);
+	}
 
 	function initNavigation() {
 		document.addEventListener('keydown', event => {
 			event.preventDefault();
-			console.log('code:', event.code);
 			if (['ArrowRight', 'ArrowDown', 'KeyS', 'KeyD', 'Space'].includes(event.code)) {
 				nextSlide();
 			}
 			else if(['ArrowLeft', 'ArrowUp', 'KeyW', 'KeyA'].includes(event.code)) {
 				previousSlide();
 			}
+			else if (event.key === 'm') {
+				toggleView();
+			}
+		});
+
+		document.querySelector('h1').addEventListener('click', () => {
+			toggleView();
+		});
+
+		window.addEventListener('orientationchange', event => {
+			setModeBasedOnOrientation();
 		});
 	}
 
@@ -9239,10 +9348,8 @@ var Deck = (function (exports) {
 		if(slide.classList.contains(className)) return
 
 		const classAttrib = slide.attributes["class"];
-		console.log(classAttrib);
 		if(classAttrib) {
 			const classes = classAttrib.value;
-			console.log(classes);
 			const deckClasses = classes.match(/deck-.+/);
 			if(deckClasses) {
 				for(let cl of deckClasses) {
@@ -9274,7 +9381,18 @@ var Deck = (function (exports) {
 		}
 	}
 
+	function setModeBasedOnOrientation() {
+		if(screen.orientation.type.startsWith('portrait')) {
+			documentMode();
+		}
+		else {
+			deckMode();
+		}
+	}
+
 	function initDeck() {
+		document.querySelector('meta[name="viewport"]').setAttribute('content', "initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no");
+
 		current = 1;
 		if(window.location.hash.length > 0 && window.location.hash.startsWith('#slide-')) {
 			current = parseInt(window.location.hash.slice('#slide-'.length), 10);
@@ -9294,9 +9412,9 @@ var Deck = (function (exports) {
 		count = slides.length;
 
 		setClasses();
+		renderMath();
 		initNavigation();
-
-		document.body.classList.add('mode-deck');
+		setModeBasedOnOrientation();
 	}
 
 	function currentSlide() {
@@ -9324,16 +9442,42 @@ var Deck = (function (exports) {
 		setHash('slide-'+i);
 	}
 
-	document.addEventListener('DOMContentLoaded', () => {
+	function toggleView() {
+		if(mode === 'document') {
+			deckMode();
+		}
+		else {
+			documentMode();
+		}
+	}
+
+	function documentMode() {
+		document.body.classList.remove('mode-deck');
+		document.body.classList.add('mode-document');
+		mode = 'document';
+		removeTouchNavigation();
+	}
+
+	function deckMode() {
+		document.body.classList.add('mode-deck');
+		document.body.classList.remove('mode-document');
+		mode = 'deck';
+		addTouchNavigation();
+	}
+
+	DOMReady().then(() => {
 		initDeck();
 	});
 
 	exports.currentSlide = currentSlide;
+	exports.deckMode = deckMode;
+	exports.documentMode = documentMode;
 	exports.getSlideCount = getSlideCount;
 	exports.initDeck = initDeck;
 	exports.nextSlide = nextSlide;
 	exports.previousSlide = previousSlide;
 	exports.setCurrent = setCurrent;
+	exports.toggleView = toggleView;
 
 	Object.defineProperty(exports, '__esModule', { value: true });
 

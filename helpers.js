@@ -19,3 +19,22 @@ export const loadCSS = url => new Promise(resolve => {
 	link.setAttribute("href", url)
 	document.head.insertBefore(link , null)
 })
+
+const ready = new Promise((resolve) => {
+	if (document.readyState === "complete" || document.readyState === "loaded" || document.readyState === "interactive") {
+		setTimeout(resolve, 1);
+	}
+	else {
+		document.addEventListener('DOMContentLoaded', () => {
+			resolve()
+		})
+	}
+})
+
+ready.then(() => {
+	console.log('DOM Ready')
+})
+
+export function DOMReady() {
+	return ready
+}

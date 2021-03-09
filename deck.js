@@ -1,6 +1,9 @@
+import {DOMReady} from './helpers'
 import './deck.scss'
 
 import './code.js'
+
+import renderMath from './math'
 
 function setHash(str) {
 	if(history.pushState) {
@@ -13,17 +16,66 @@ function setHash(str) {
 
 let count = 0
 let current = 0
+let mode = ''
+
+const touch = {}
+
+function touchStart(event) {
+	console.log(event)
+	if(event.changedTouches.length == 1) {
+		touch.x = event.changedTouches[0].clientX
+		touch.y = event.changedTouches[0].clientY
+	}
+}
+
+function touchEnd(event) {
+	console.log(event)
+	const v = {}
+	if(event.changedTouches.length == 1) {
+		v.x = event.changedTouches[0].clientX - touch.x
+		v.y = event.changedTouches[0].clientY - touch.y
+
+		if(Math.abs(v.x) > 4*Math.abs(v.y)) {
+			if(v.x > 0) {
+				previousSlide()
+			}
+			else {
+				nextSlide()
+			}
+		}
+	}
+}
+
+function addTouchNavigation() {
+	document.addEventListener('touchstart', touchStart)
+	document.addEventListener('touchend', touchEnd)
+}
+
+function removeTouchNavigation() {
+	document.removeEventListener('touchstart', touchStart)
+	document.removeEventListener('touchend', touchEnd)
+}
 
 function initNavigation() {
 	document.addEventListener('keydown', event => {
 		event.preventDefault()
-		console.log('code:', event.code)
 		if (['ArrowRight', 'ArrowDown', 'KeyS', 'KeyD', 'Space'].includes(event.code)) {
 			nextSlide()
 		}
 		else if(['ArrowLeft', 'ArrowUp', 'KeyW', 'KeyA'].includes(event.code)) {
 			previousSlide()
 		}
+		else if (event.key === 'm') {
+			toggleView()
+		}
+	})
+
+	document.querySelector('h1').addEventListener('click', () => {
+		toggleView()
+	})
+
+	window.addEventListener('orientationchange', event => {
+		setModeBasedOnOrientation()
 	})
 }
 
@@ -32,10 +84,8 @@ function setClass(slideNumber, className) {
 	if(slide.classList.contains(className)) return
 
 	const classAttrib = slide.attributes["class"]
-	console.log(classAttrib)
 	if(classAttrib) {
 		const classes = classAttrib.value
-		console.log(classes)
 		const deckClasses = classes.match(/deck-.+/)
 		if(deckClasses) {
 			for(let cl of deckClasses) {
@@ -67,7 +117,18 @@ function setClasses() {
 	}
 }
 
+function setModeBasedOnOrientation() {
+	if(screen.orientation.type.startsWith('portrait')) {
+		documentMode()
+	}
+	else {
+		deckMode()
+	}
+}
+
 export function initDeck() {
+	document.querySelector('meta[name="viewport"]').setAttribute('content', "initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no")
+
 	current = 1
 	if(window.location.hash.length > 0 && window.location.hash.startsWith('#slide-')) {
 		current = parseInt(window.location.hash.slice('#slide-'.length), 10)
@@ -87,9 +148,9 @@ export function initDeck() {
 	count = slides.length
 
 	setClasses()
+	renderMath()
 	initNavigation()
-
-	document.body.classList.add('mode-deck')
+	setModeBasedOnOrientation()
 }
 
 export function currentSlide() {
@@ -98,16 +159,6 @@ export function currentSlide() {
 
 export function getSlideCount() {
 	return count
-}
-
-function transformElement(selector, className, newClass) {
-	const previous = document.querySelector(selector)
-	if(!previous) {
-		console.log('Nothing', selector)
-		return
-	}
-	previous.classList.remove(className)
-	previous.classList.add(newClass)
 }
 
 export function nextSlide() {
@@ -127,6 +178,29 @@ export function setCurrent(i) {
 	setHash('slide-'+i)
 }
 
-document.addEventListener('DOMContentLoaded', () => {
+export function toggleView() {
+	if(mode === 'document') {
+		deckMode()
+	}
+	else {
+		documentMode()
+	}
+}
+
+export function documentMode() {
+	document.body.classList.remove('mode-deck')
+	document.body.classList.add('mode-document')
+	mode = 'document'
+	removeTouchNavigation()
+}
+
+export function deckMode() {
+	document.body.classList.add('mode-deck')
+	document.body.classList.remove('mode-document')
+	mode = 'deck'
+	addTouchNavigation()
+}
+
+DOMReady().then(() => {
 	initDeck()
 })
