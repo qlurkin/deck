@@ -15,7 +15,7 @@ function normalizeIndent(str) {
 function normalizeAllIndent() {
 	const codes = document.querySelectorAll('pre>code')
 	codes.forEach(code => {
-		code.innerText = normalizeIndent(code.innerText)
+		code.innerHTML = normalizeIndent(code.innerHTML)
 	})
 }
 
