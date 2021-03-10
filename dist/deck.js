@@ -31,16 +31,6 @@ var Deck = (function (exports) {
 		document.head.insertBefore(script , null);
 	});
 
-	const loadCSS = url => new Promise(resolve => {
-		const link = document.createElement('link');
-		link.onload = () => {
-			resolve();
-		};
-		link.setAttribute("rel", "stylesheet");
-		link.setAttribute("href", url);
-		document.head.insertBefore(link , null);
-	});
-
 	const ready = new Promise((resolve) => {
 		if (document.readyState === "complete" || document.readyState === "loaded" || document.readyState === "interactive") {
 			setTimeout(resolve, 1);
@@ -9241,7 +9231,7 @@ var Deck = (function (exports) {
 	function normalizeAllIndent() {
 		const codes = document.querySelectorAll('pre>code');
 		codes.forEach(code => {
-			code.innerText = normalizeIndent(code.innerText);
+			code.innerHTML = normalizeIndent(code.innerHTML);
 		});
 	}
 
@@ -9256,16 +9246,8 @@ var Deck = (function (exports) {
 		if(content.includes('$$') ||
 			(content.includes('\\(') && content.includes('\\)')) ||
 			(content.includes('\\[') && content.includes('\\]'))) {
-				console.log('Loading Katex...');
-				const proms = [];
-				loadCSS('https://cdn.jsdelivr.net/npm/katex@0.7.1/dist/katex.min.css');
-				proms.push(loadScript('https://cdn.jsdelivr.net/npm/katex@0.7.1/dist/katex.min.js'));
-				proms.push(loadScript('https://cdn.jsdelivr.net/npm/katex@0.7.1/dist/contrib/auto-render.min.js'));
-				proms.push(DOMReady());
-				Promise.all(proms).then(() => {
-					console.log('Render Math...');
-					renderMathInElement(document.body);
-				});
+				console.log('Loading MathJax...');
+				loadScript('https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js');
 			}
 	}
 
@@ -9285,7 +9267,6 @@ var Deck = (function (exports) {
 	const touch = {};
 
 	function touchStart(event) {
-		console.log(event);
 		if(event.changedTouches.length == 1) {
 			touch.x = event.changedTouches[0].clientX;
 			touch.y = event.changedTouches[0].clientY;
@@ -9293,7 +9274,6 @@ var Deck = (function (exports) {
 	}
 
 	function touchEnd(event) {
-		console.log(event);
 		const v = {};
 		if(event.changedTouches.length == 1) {
 			v.x = event.changedTouches[0].clientX - touch.x;
