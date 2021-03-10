@@ -21,7 +21,6 @@ let mode = ''
 const touch = {}
 
 function touchStart(event) {
-	console.log(event)
 	if(event.changedTouches.length == 1) {
 		touch.x = event.changedTouches[0].clientX
 		touch.y = event.changedTouches[0].clientY
@@ -29,7 +28,6 @@ function touchStart(event) {
 }
 
 function touchEnd(event) {
-	console.log(event)
 	const v = {}
 	if(event.changedTouches.length == 1) {
 		v.x = event.changedTouches[0].clientX - touch.x
