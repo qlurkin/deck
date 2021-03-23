@@ -29,9 +29,31 @@
 				Block of Code
 				<pre>
 					<code>
-						function hello() {
-							console.log("hello World !!!")
-						}
+						class NaturalIterator:
+							def __init__(self, n):
+								self.__value = n
+
+							def __iter__(self):
+								return self
+
+							def __next__(self):
+								if self.__value == 0:
+									raise StopIteration()
+								res = self.__value%2
+								self.__value = self.__value // 2
+								return res
+
+						class Natural:
+							def __init__(self, n):
+								self.__value = n
+
+							def __iter__(self):
+								# a generator is an iterator
+								return NaturalIterator(self.__value)
+
+						print('generator 3 :')
+						for e in Natural(42):
+							print(e)
 					</code>
 				</pre>
 			</li>

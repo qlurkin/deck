@@ -1,8 +1,6 @@
 import hljs from './highlight'
 import {DOMReady} from './helpers'
 
-import './code.scss'
-
 function normalizeIndent(str) {
 	// trim empty lines from start & end
 	str = str.replace(/^\s?\n|\n\s?$/g, '');
