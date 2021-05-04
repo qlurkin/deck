@@ -48,6 +48,10 @@ li small {
 	color: gray;
 }
 
+li > ul {
+	margin-top: 0.5em;
+}
+
 .indent {
 	padding-left: 3ex;
 }
@@ -235,6 +239,42 @@ figure {
 				height: 100%;
 				object-fit: cover;
 				margin: 0;
+			}
+		}
+
+		&.code {
+			width: 95%;
+
+			&::before {
+				position: fixed;
+				background-color: #f0f0f0;
+				top: 0;
+				bottom: 0;
+				left: 0;
+				right: 0;
+				content: '';
+				z-index: 10;
+				display: block;
+			}
+
+			&::after {
+				content: '';
+				position: fixed;
+				top: 0;
+				left: 0;
+				bottom: 0;
+				width: 3%;
+				background-color: #bbb;
+				z-index: 20;
+			}
+
+			& > * {
+				z-index: 100;
+			}
+
+			h2 {
+				z-index: 1000;
+				background-color: #555;
 			}
 		}
 	}
