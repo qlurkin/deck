@@ -56,14 +56,16 @@ function removeTouchNavigation() {
 
 function initNavigation() {
 	document.addEventListener('keydown', event => {
-		event.preventDefault()
 		if (['ArrowRight', 'ArrowDown', 'KeyS', 'KeyD', 'Space'].includes(event.code)) {
+			event.preventDefault()
 			nextSlide()
 		}
 		else if(['ArrowLeft', 'ArrowUp', 'KeyW', 'KeyA'].includes(event.code)) {
+			event.preventDefault()
 			previousSlide()
 		}
 		else if (event.key === 'm') {
+			event.preventDefault()
 			toggleView()
 		}
 	})
