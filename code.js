@@ -15,6 +15,10 @@ function normalizeAllIndent() {
 	codes.forEach(code => {
 		code.innerHTML = normalizeIndent(code.innerHTML)
 	})
+	const terminals = document.querySelectorAll('.terminal')
+	terminals.forEach(term => {
+		term.innerHTML = normalizeIndent(term.innerHTML)
+	})
 }
 
 DOMReady().then(() => {
