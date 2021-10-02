@@ -118,8 +118,13 @@ function setClasses() {
 }
 
 function setModeBasedOnOrientation() {
-	if(screen.orientation.type.startsWith('portrait')) {
-		documentMode()
+	if(screen.orientation) {
+		if(screen.orientation.type.startsWith('portrait')) {
+			documentMode()
+		}
+		else {
+			deckMode()
+		}
 	}
 	else {
 		deckMode()
